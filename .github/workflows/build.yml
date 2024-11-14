@@ -1,0 +1,36 @@
+name: Configure, Build, Static analysis
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  configure_and_build:
+    runs-on: ubuntu-latest
+    container:
+      image: zakaria1193/cpp-cmake-llvm
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Configure CMake
+        run: make configure
+
+      - name: Build
+        run: make build-debug
+
+
+      - name: Build
+        run: make build-release
+
+      - name: Run
+        run: make run
+
+      - name: cppcheck
+        run: make cppcheck
+
+      - name: clang-tidy
+        run: make clang-tidy
+      
